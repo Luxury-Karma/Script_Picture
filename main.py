@@ -49,4 +49,5 @@ def creat_new_img(file_oppen):
         img = Image.merge("RGB",(b,g,r))
         img.show()
 
+
 get_picture()
