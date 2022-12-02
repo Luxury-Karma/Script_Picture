@@ -3,9 +3,7 @@ from PIL import Image
 import aspose.words as aw
 
 
-def get_picture():
-    img_path = 'C:\\Users\\PC\\Pictures\\server screen shot\\4'
-    img_type_to_get = '.png'
+def get_picture(img_path,img_type_to_get):
     img = img_path+'\\'+img_type_to_get
     files = []
     for path in os.listdir(img_path):
@@ -72,7 +70,9 @@ def creat_new_img(file_oppen,path):
     return path_and_name
 
 def main():
-    to_convert = get_picture()
+    img_path = input('What is the absolute path of the file: ')
+    img_type = "PNG"
+    to_convert = get_picture(img_path,img_type)
 
 
 
