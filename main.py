@@ -1,5 +1,6 @@
 import os
 from PIL import Image
+import sys
 import aspose.words as aw
 
 
@@ -41,7 +42,6 @@ def open_all_file(files_to_oppen,files_path):
     return file_Oppen
 
 def creat_new_img(file_oppen,path):
-
     #oppen all the image
     img = []
     for e in file_oppen:
@@ -63,16 +63,42 @@ def creat_new_img(file_oppen,path):
     for e in range(len(img)):
         new_img.paste(img[e],(emplacementY,emplacementX))
         emplacementX = emplacementX + img_size[e][1]
+
+
+    #creat path for final folder
+
+    creat_new_path = True
+    for e in os.listdir(path):
+        if e == 'Final_image':
+            print(f'Path {path} all ready exist no new path created')
+            creat_new_path = False
+    path = path + '\\Final_image'
+    if creat_new_path :
+        os.mkdir(path)
     #save the image
-    path_and_name = path+'\\final.PNG'
-    new_img.save(path_and_name, 'PNG')
-    new_img.show()
-    return path_and_name
+    path_and_name_PNG = path+'\\final.PNG'
+    new_img.save(path_and_name_PNG, 'PNG')
+    path_and_name_PDF = path+'\\final.PDF'
+    #new_img.show()
+    #change PNG to PDF
+    doc = aw.Document()
+    builder = aw.DocumentBuilder(doc)
+    builder.insert_image(path_and_name_PNG)
+    doc.save(path_and_name_PDF)
+    os.remove("path_and_name")
+
+
+    return path_and_name_PDF
 
 def main():
-    img_path = input('What is the absolute path of the file: ')
+
     img_type = "PNG"
-    to_convert = get_picture(img_path,img_type)
+    #total args
+    #n=len(sys.argv)
+    img_path = input('What is the absolute path of the file: ').strip('""')
+
+    get_picture(img_path,img_type)
+
 
 
 
