@@ -1,9 +1,11 @@
 import os
+import re
+
 from PIL import Image
 import sys
 import aspose.words as aw
 
-
+name = 'main'
 def get_picture(img_path,img_type_to_get):
     img = img_path+'\\'+img_type_to_get
     files = []
@@ -90,17 +92,22 @@ def creat_new_img(file_oppen,path):
 
     return path_and_name_PDF
 
-def main():
+def chelp():
+    pass
 
+
+
+def main(argv):
     img_type = "PNG"
-    #total args
-    #n=len(sys.argv)
-    img_path = input('What is the absolute path of the file: ').strip('""')
+    flag = {'-h': [chelp, None, None],
+            '-i': [ get_picture, r'.:\.*', img_type]}
+    for i in range(len(argv)):
+        arg = argv[i]
+        if flag.keys().__contains__(arg):
+            if flag[arg][1] is None or re.search(flag[arg][1], argv[i+1]):
+                flag[arg][0](argv[i+1], flag[arg][2])
 
-    get_picture(img_path,img_type)
 
 
-
-
-
-main()
+if name== 'main':
+    main(sys.argv[1:])
