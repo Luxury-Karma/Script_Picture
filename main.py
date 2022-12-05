@@ -2,25 +2,24 @@ import os
 import re
 from PIL import Image
 import sys
-import aspose.words as aw
+
 
 name = 'main'
+
+
 def get_picture(img_path,img_type_to_get):
     img = img_path+'\\'+img_type_to_get
     files = []
     for path in os.listdir(img_path):
-        #check if we are in folder or if it is a file
+        # check if we are in folder or if it is a file
         if os.path.isfile(os.path.join(img_path,path)):
-            files.append(path) #get every files in the folder, ignore all other folder
-    return creat_new_img(open_all_file(Separate_files_by_typed(files,img_type_to_get,img_path),img_path),img_path)
-#    print(f'absolute Path : {img} ,\nimage name : {img_type_to_get},\n folder path : {img_path}')
-#    img_file = open(img,'r')
-#    print(f'file: {img_type_to_get} is Open')
+            files.append(path) # get every files in the folder, ignore all other folder
+    return creat_new_img(open_all_file(separate_files_by_typed(files,img_type_to_get,img_path),img_path),img_path)
 
 
-def Separate_files_by_typed(files, type,path):
+def separate_files_by_typed(files, type, path):
     file_typed = []
-    #remove any file we wouldn't want (wrong type)
+    # remove any file we wouldn't want (wrong type)
     for e in files :
         k=0
         for i in range(len(e)):
@@ -36,37 +35,37 @@ def Separate_files_by_typed(files, type,path):
 
 
 def open_all_file(files_to_oppen,files_path):
-    file_Oppen = []
+    file_open = []
     for e in files_to_oppen:
         path = files_path + "\\" + e
-        file_Oppen.append(open(path))
-    return file_Oppen
+        file_open.append(open(path))
+    return file_open
 
-def creat_new_img(file_oppen,path):
-    #oppen all the image
+
+def creat_new_img(file_open,path):
+    # oppen all the image
     img = []
-    for e in file_oppen:
+    for e in file_open:
         print(e)
         f = Image.open(e)
         img.append(f)
-    #find the size of all image
+    # find the size of all image
     img_size = []
     for e in img:
        img_size.append(e.size)
-    #creat a new image with the correct size
+    # creat a new image with the correct size
     length = 0
     for e in img_size:
         length = length + e[1]
     new_img = Image.new('RGB', (img_size[0][0], length),(250,250,250))
-    emplacementX= 0
-    emplacementY= 0
-    #place the file where they should be to be past
+    emplacement_x= 0
+    emplacement_y= 0
+    # place the file where they should be to be past
     for e in range(len(img)):
-        new_img.paste(img[e],(emplacementY,emplacementX))
-        emplacementX = emplacementX + img_size[e][1]
+        new_img.paste(img[e],(emplacement_y, emplacement_x))
+        emplacement_x = emplacement_x + img_size[e][1]
 
-
-    #creat path for final folder
+    # creat path for final folder
 
     creat_new_path = True
     for e in os.listdir(path):
@@ -76,23 +75,19 @@ def creat_new_img(file_oppen,path):
     path = path + '\\Final_image'
     if creat_new_path :
         os.mkdir(path)
-    #save the PDF
-    path_and_name_PNG = path+'\\final.PDF'
-    new_img.save(path_and_name_PNG)
+    # save the PDF
+    path_and_name_pdf = path+'\\final.PDF'
+    new_img.save(path_and_name_pdf)
 
-
-
-    #return path_and_name_PDF
 
 def chelp():
     pass
 
 
-
 def main(argv):
     img_type = "PNG"
     flag = {'-h': [chelp, None, None],
-            '-i': [ get_picture, r'.:\.*', img_type]}
+            '-i': [get_picture, r'.:\.*', img_type]}
     for i in range(len(argv)):
         arg = argv[i]
         if flag.keys().__contains__(arg):
@@ -100,6 +95,5 @@ def main(argv):
                 flag[arg][0](argv[i+1], flag[arg][2])
 
 
-
-if name== 'main':
+if name == 'main':
     main(sys.argv[1:])
