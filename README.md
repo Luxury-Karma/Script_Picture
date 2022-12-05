@@ -6,6 +6,8 @@ py path_to_the_main.py path_to_the_picture_folder
 press enter
 
 ALL THE PDF OF THE FOLDER WILL BE TAKE 
+PUT IN THE CORRECT ORDER ALL THE PICTURE IN THE FOLDER (like 1.png, 2.png,3.png ...)
+IT WORK WITH PNG BUT TECHNICALLY COULD WORK WITH OTHER IF YOU CHANGE IT WITH PYCHARM
 
 then it will creat a folder "Final_image" and a PDF "final.PDF"
 
