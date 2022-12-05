@@ -25,20 +25,19 @@ def open_all_file(files_to_oppen,files_path):
 
 def creat_new_img(file_open,path):
     # oppen all the image
+
+    # creat a new image with the correct size
+    length = 0
     img = []
+    img_size = []
     for e in file_open:
         print(e)
         f = Image.open(e)
         img.append(f)
-    # find the size of all image
-    img_size = []
-    for e in img:
-       img_size.append(e.size)
-    # creat a new image with the correct size
-    length = 0
-    for e in img_size:
-        length = length + e[1]
+        img_size.append(f.size)
+        length = length + f.size[1]
     new_img = Image.new('RGB', (img_size[0][0], length),(250,250,250))
+
     emplacement_x= 0
     emplacement_y= 0
     # place the file where they should be to be past
@@ -47,7 +46,6 @@ def creat_new_img(file_open,path):
         emplacement_x = emplacement_x + img_size[e][1]
 
     # creat path for final folder
-
     creat_new_path = True
     for e in os.listdir(path):
         if e == 'Final_image':
@@ -56,6 +54,8 @@ def creat_new_img(file_open,path):
     path = path + '\\Final_image'
     if creat_new_path :
         os.mkdir(path)
+
+
     # save the PDF
     path_and_name_pdf = path+'\\final.PDF'
     new_img.save(path_and_name_pdf)
