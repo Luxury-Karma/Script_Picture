@@ -1,6 +1,5 @@
 import os
 import re
-
 from PIL import Image
 import sys
 import aspose.words as aw
@@ -77,20 +76,13 @@ def creat_new_img(file_oppen,path):
     path = path + '\\Final_image'
     if creat_new_path :
         os.mkdir(path)
-    #save the image
-    path_and_name_PNG = path+'\\final.PNG'
-    new_img.save(path_and_name_PNG, 'PNG')
-    path_and_name_PDF = path+'\\final.PDF'
-    #new_img.show()
-    #change PNG to PDF
-    doc = aw.Document()
-    builder = aw.DocumentBuilder(doc)
-    builder.insert_image(path_and_name_PNG)
-    doc.save(path_and_name_PDF)
-    os.remove("path_and_name")
+    #save the PDF
+    path_and_name_PNG = path+'\\final.PDF'
+    new_img.save(path_and_name_PNG)
 
 
-    return path_and_name_PDF
+
+    #return path_and_name_PDF
 
 def chelp():
     pass
