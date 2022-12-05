@@ -6,3 +6,8 @@ py path_to_the_main.py path_to_the_picture_folder
 press enter
 
 then it will creat a folder "Final_image" and a PDF "final.PDF"
+
+you will need to import in python :
+Sys 
+from PIL import Image 
+
