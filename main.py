@@ -3,35 +3,16 @@ import re
 from PIL import Image
 import sys
 
-
-name = 'main'
-
-
-def get_picture(img_path,img_type_to_get):
-    img = img_path+'\\'+img_type_to_get
+def get_picture(img_path):
     files = []
+    regex = r'\.png$'
     for path in os.listdir(img_path):
         # check if we are in folder or if it is a file
         if os.path.isfile(os.path.join(img_path,path)):
-            files.append(path) # get every files in the folder, ignore all other folder
-    return creat_new_img(open_all_file(separate_files_by_typed(files,img_type_to_get,img_path),img_path),img_path)
+            files.append(path) # get every file in the folder, ignore all others folder
+    lst_img = [img_path+'\\'+e for e in files if re.search(regex,e.lower())]
+    return creat_new_img(lst_img, img_path)
 
-
-def separate_files_by_typed(files, type, path):
-    file_typed = []
-    # remove any file we wouldn't want (wrong type)
-    for e in files :
-        k=0
-        for i in range(len(e)):
-            if e[i].upper() == type[k].upper():
-                k = k+1
-            if k == len(type):
-               file_typed.append(e)
-        file_to_oppen = []
-    for e in file_typed:
-        file_to_oppen.append(path+'\\'+e)
-    creat_new_img(file_to_oppen,path)
-    return file_typed
 
 
 def open_all_file(files_to_oppen,files_path):
@@ -85,15 +66,14 @@ def chelp():
 
 
 def main(argv):
-    img_type = "PNG"
-    flag = {'-h': [chelp, None, None],
-            '-i': [get_picture, r'.:\.*', img_type]}
+    flag = {'-h': [chelp, None],
+            '-i': [get_picture, r'.:\.*']}
     for i in range(len(argv)):
         arg = argv[i]
         if flag.keys().__contains__(arg):
             if flag[arg][1] is None or re.search(flag[arg][1], argv[i+1]):
-                flag[arg][0](argv[i+1], flag[arg][2])
+                flag[arg][0](argv[i+1])
 
 
-if name == 'main':
+if __name__ == '__main__':
     main(sys.argv[1:])
